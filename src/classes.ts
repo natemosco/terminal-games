@@ -42,7 +42,7 @@ class SessionHistory {
     private isGameSessionArray(value: GameSession[] | TicTacToeScoreboard): value is GameSession[] {
         return Array.isArray(value);
     }
-    
+
     public logGameSessionHistory(history: GameSession|TicTacToeScoreboard): void {
         switch(history.gameName){
             case "Tic Tac Toe":
@@ -54,6 +54,10 @@ class SessionHistory {
                     genericGameSessions.push(history as GameSession)
                 }
         }
+    }
+
+    public getSessionHistory(string:Games): GameSession[] | TicTacToeScoreboard {
+        return this.gameSessions[string];
     }
 }
 
