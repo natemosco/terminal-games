@@ -3,24 +3,54 @@ import { TicTacToeScoreboard } from "../classes";
 function ticTacToe(): void {
     console.log("Welcome to Tic Tac Toe!");
     // Game logic would go here
-
-    let scoreBoard: TicTacToeScoreboard = { gameName: 'Tic Tac Toe', playerX: 0, playerO: 0, tieMatches: 0 };
-    let foreit = false;
-
+    
     let currentPlayer: 'X' | 'O' = 'X';
-    const board: string[][] = [
+    let scoreBoard: TicTacToeScoreboard = { gameName: 'Tic Tac Toe', playerX: 0, playerO: 0, tieMatches: 0 };
+    let board: string[][] = [
         [' ', ' ', ' '],
         [' ', ' ', ' '],
         [' ', ' ', ' ']
     ];
+    let forfeit = false;
+    let turnCounter = 0;
+
+    function ResetBoard(): void {
+        board = [
+            [' ', ' ', ' '],
+            [' ', ' ', ' '],
+            [' ', ' ', ' ']
+        ];
+        turnCounter = 0;
+        forfeit = false;
+        currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
+    }
+
+    function foreitGame(player: 'X' | 'O'): void {
+        forfeit = true;
+        if (player === 'X'){
+            scoreBoard.playerO += 1;
+            ResetBoard();
+            console.log("Player X has forfeited the game. Player O wins!");
+        }
+        else {
+            scoreBoard.playerX += 1;
+            ResetBoard();
+            console.log("Player O has forfeited the game. Player X wins!");
+        }
+    }
+
+    function printBoard(): void {
+        console.log("Current Board:/n")
+        board.forEach((row, index) =>{
+            console.log(`row: ${index} `,row.join(' | '))
+            console.log('--------------')
+        })
+    }
 
 
-
-    // I want to export the scoreboard so that the main index.ts file can access the data even after the game ends
-    // or if the user quits mid-game; quitting mid-game is counted as a loss for the quitting player;
-    // ties are counted when the board is full with no winner
     
-    // For now, just a placeholder return
+
+    
     return;
 };
 
