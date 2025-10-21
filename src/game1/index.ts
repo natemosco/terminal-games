@@ -1,4 +1,5 @@
 import { SessionHistory, TicTacToeScoreboard } from "../classes";
+import { prompt } from '../index';
 
 function ticTacToe(): void {
     console.log("Welcome to Tic Tac Toe!");
@@ -48,19 +49,18 @@ function ticTacToe(): void {
         console.log("Current Board:/n/n")
         board.forEach((row, index) =>{
             console.log(`row: ${index} `,row.join(' | '))
-            console.log('--------------')
+            console.log('       --------------')
         })
     }
 
 
     while( !forfeit && turnCounter <9 ){
         printBoard();
-        const prompt = require('prompt-sync')();
         const move = prompt(`Player ${currentPlayer}, enter your move as row,col (or type 'forfeit' or 'f' to forfeit): `);
         if(move.toLowerCase() === 'forfeit' || move.toLowerCase() === 'f'){
             console.log("Forfeiting the game gives the win to the other player.")
-            prompt("Enter 'y' to confirm forfeiting, or any other key to continue playing: ");
-            if(prompt.toLowerCase() === 'y'){
+            const doubleCheck = prompt("Enter 'y' to confirm forfeiting, or any other key to continue playing: ");
+            if(doubleCheck.toLowerCase() === 'y'){
                 foreitGame(currentPlayer);
                 break;
             }
@@ -68,7 +68,9 @@ function ticTacToe(): void {
                 continue;
             } 
         }
-        const [row, col] = move.split(',').map((num: string)=> parseInt(num.trim()));
+        const [row, col] = move.split(',').map((num: string)=> parseInt(num.trim())) as [number, number];
+        //parseInt returns NaN if the value is not a number
+        //so why is this isNan check not working?
         if( isNaN(row) || isNaN(col)  || row < 0 || row > 2 || col < 0 || col > 2 ){
             console.log("Invalid move. Please enter row and column as numbers between 0-2 in the following format: row,column i.e. 0,1");
                 continue;
@@ -85,8 +87,7 @@ function ticTacToe(): void {
     }
     SessionHistory.getInstance().logGameSessionHistory(scoreBoard);
 
-    let anotherGamePrompt = require('prompt-sync')();
-    const playAgain = anotherGamePrompt("Game over! Would you like to play another game of Tic Tac Toe? (y/n): ");
+    const playAgain = prompt("Game over! Would you like to play another game of Tic Tac Toe? (y/n): ");
     if(playAgain.toLowerCase() === 'y'){
         ticTacToe();
     }
