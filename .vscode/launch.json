@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "Launch (ts-node)",
-      "type": "pwa-node",
+      "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "node",
@@ -15,7 +15,7 @@
     },
     {
       "name": "Launch (compiled)",
-      "type": "pwa-node",
+      "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "program": "${workspaceFolder}/dist/index.js",
